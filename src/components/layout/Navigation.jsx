@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 const navItems = [
   { name: 'Home', path: '/' },
   { name: 'Services', path: '/services' },
-  { name: 'How It Works', path: '/how-it-works' },
+  { name: 'Pricing', path: '/pricing' },
   { name: 'About Us', path: '/about' },
   { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
