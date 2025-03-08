@@ -730,7 +730,7 @@ export default function Home() {
         <HeroSection />
         <ServicesOverview />
         <Technologies />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <CtaSection />
       </div>
 
