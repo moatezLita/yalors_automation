@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { 
   Mail, 
   Phone, 
@@ -15,6 +16,7 @@ import {
   Check,
   AlertCircle
 } from 'lucide-react'
+import Head from 'next/head'
 
 export default function ContactPage() {
   const pageRef = useRef(null)
@@ -25,7 +27,7 @@ export default function ContactPage() {
     service: '',
     message: ''
   })
-  const [formStatus, setFormStatus] = useState(null) // 'success', 'error', or null
+  const [formStatus, setFormStatus] = useState(null) // 'success', 'error', 'loading', or null
   
   const handleChange = (e) => {
     setFormState({
@@ -34,15 +36,26 @@ export default function ContactPage() {
     })
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Here you would typically send the form data to your backend or email service
-    
-    // Simulate submission for demonstration
     setFormStatus('loading')
     
-    setTimeout(() => {
-      // Simulate success (in production, check response from your API)
+    try {
+      // Import and use the form submission utility
+      const { submitContactForm, validateContactForm } = await import('@/utils/formSubmission')
+      
+      // Validate the form
+      const { isValid, errors } = validateContactForm(formState)
+      
+      if (!isValid) {
+        console.error('Form validation errors:', errors)
+        throw new Error('Please fill out all required fields correctly')
+      }
+      
+      // Submit the form
+      await submitContactForm(formState, 'contact-page')
+      
+      // Form submitted successfully
       setFormStatus('success')
       
       // Reset form after success
@@ -53,7 +66,21 @@ export default function ContactPage() {
         service: '',
         message: ''
       })
-    }, 1500)
+      
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setFormStatus(null)
+      }, 5000)
+      
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setFormStatus('error')
+      
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setFormStatus(null)
+      }, 5000)
+    }
   }
 
   useEffect(() => {
@@ -96,6 +123,18 @@ export default function ContactPage() {
             start: "top 75%",
           }
         })
+        
+        // Animate map container
+        gsap.from('.map-container', {
+          x: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: '.map-container',
+            start: "top 75%",
+          }
+        })
       }, pageRef)
 
       return () => ctx.revert() // Cleanup animations on unmount
@@ -119,9 +158,46 @@ export default function ContactPage() {
   ]
 
   return (
-    <div ref={pageRef} className="relative min-h-screen pt-20 overflow-hidden">
-      {/* Simplified background */}
+    <div ref={pageRef} className="relative min-h-screen pt-20 pb-16 overflow-hidden">
+      {/* SEO metadata */}
+      <Head>
+        <title>Contact Us | Yalors - Automation Solutions for Your Business</title>
+        <meta name="description" content="Get in touch with Yalors for all your automation needs. Let us help you streamline your workflow and boost productivity." />
+        <meta name="keywords" content="contact yalors, automation services, workflow automation, Tunisia tech" />
+        <meta property="og:title" content="Contact Yalors - Automation Solutions" />
+        <meta property="og:description" content="Contact our team of automation experts to discuss how we can transform your business processes." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yalors.tn/contact" />
+        <link rel="canonical" href="https://yalors.tn/contact" />
+      </Head>
+      
+      {/* Animated background */}
       <div className="fixed inset-0 bg-gradient-to-b from-blue-900 to-indigo-900 -z-20"></div>
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Animated dots */}
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-blue-400/30"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+      </div>
       
       {/* Content */}
       <div className="relative z-10">
@@ -158,8 +234,8 @@ export default function ContactPage() {
                   <Phone className="h-6 w-6 text-purple-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">Call Us</h3>
-                <a href="tel:+21611223344" className="text-blue-200 hover:text-blue-100 transition-colors">
-                  +216 11 22 33 44
+                <a href="tel:+21690318391" className="text-blue-200 hover:text-blue-100 transition-colors">
+                  +216 90 318 391 
                 </a>
               </div>
               
@@ -316,79 +392,69 @@ export default function ContactPage() {
                 </form>
               </div>
               
-              {/* Info and map */}
-              <div className="space-y-6">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                  <h2 className="text-2xl font-bold text-white mb-6">Why Work With Us</h2>
+              {/* Map or Office hours section */}
+              <div className="map-container bg-white/10 backdrop-blur-sm rounded-xl p-6 md:p-8 border border-white/10">
+                <h2 className="text-2xl font-bold text-white mb-6">Our Office</h2>
+                
+                {/* Map placeholder - In a real implementation, you would integrate Google Maps or another map provider */}
+                <div className="relative w-full h-64 bg-blue-800/40 rounded-lg mb-6 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <MapPin className="h-12 w-12 text-blue-300/70" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-blue-900/90 to-transparent p-4">
+                    <p className="text-white font-medium">123 Innovation Street, Tech District, Tunisia</p>
+                  </div>
+                </div>
+                
+                {/* Office hours */}
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold text-white">Office Hours</h3>
                   
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="flex items-start">
-                      <div className="bg-blue-500/20 p-2 rounded-full mr-4 mt-1">
-                        <MessageSquare className="h-6 w-6 text-blue-400" />
-                      </div>
+                      <Clock className="h-5 w-5 text-blue-300 mt-0.5 mr-2" />
                       <div>
-                        <h3 className="text-white font-medium text-lg mb-1">Personalized Consultation</h3>
-                        <p className="text-blue-200">
-                          We take the time to understand your business needs and challenges to provide tailored automation solutions.
-                        </p>
+                        <p className="text-white font-medium">Monday - Friday</p>
+                        <p className="text-blue-200">9:00 AM - 6:00 PM</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start">
-                      <div className="bg-purple-500/20 p-2 rounded-full mr-4 mt-1">
-                        <Check className="h-6 w-6 text-purple-400" />
-                      </div>
+                      <Clock className="h-5 w-5 text-blue-300 mt-0.5 mr-2" />
                       <div>
-                        <h3 className="text-white font-medium text-lg mb-1">Expertise That Delivers</h3>
-                        <p className="text-blue-200">
-                          Our team brings years of experience in automation, AI, and process optimization to every project.
-                        </p>
+                        <p className="text-white font-medium">Saturday</p>
+                        <p className="text-blue-200">10:00 AM - 2:00 PM</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start">
-                      <div className="bg-teal-500/20 p-2 rounded-full mr-4 mt-1">
-                        <Clock className="h-6 w-6 text-teal-400" />
-                      </div>
+                      <Clock className="h-5 w-5 text-blue-300 mt-0.5 mr-2" />
                       <div>
-                        <h3 className="text-white font-medium text-lg mb-1">Quick Response Time</h3>
-                        <p className="text-blue-200">
-                          We value your time and aim to respond to all inquiries within 24 hours.
-                        </p>
+                        <p className="text-white font-medium">Sunday</p>
+                        <p className="text-blue-200">Closed</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-                
-                {/* Integrated map or location visual */}
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 h-64 relative">
-                  {/* Placeholder for map - in production, integrate with Google Maps or similar */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-indigo-900/50 flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="h-12 w-12 text-blue-400 mx-auto mb-2" />
-                      <h3 className="text-xl font-bold text-white mb-1">Our Location</h3>
-                      <p className="text-blue-200">
-                        123 Innovation Street<br />
-                        Tech District, Tunisia
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Business hours */}
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                  <div className="flex items-center mb-4">
-                    <Clock className="h-5 w-5 text-blue-400 mr-2" />
-                    <h3 className="text-white font-medium text-lg">Business Hours</h3>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-2 text-blue-200">
-                    <div>Monday - Friday:</div>
-                    <div>9:00 AM - 6:00 PM</div>
-                    <div>Saturday:</div>
-                    <div>10:00 AM - 2:00 PM</div>
-                    <div>Sunday:</div>
-                    <div>Closed</div>
+                  {/* Direct contact info */}
+                  <div className="pt-4 border-t border-white/10 mt-6">
+                    <h3 className="text-xl font-semibold text-white mb-3">Direct Contact</h3>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center">
+                        <Mail className="h-5 w-5 text-blue-300 mr-3" />
+                        <a href="mailto:contact@yalors.tn" className="text-blue-200 hover:text-blue-100 transition-colors">
+                          contact@yalors.tn
+                        </a>
+                      </div>
+                      
+                      <div className="flex items-center">
+                        <Phone className="h-5 w-5 text-blue-300 mr-3" />
+                        <a href="tel:+21690318391" className="text-blue-200 hover:text-blue-100 transition-colors">
+                          +216 90 318 391
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -396,43 +462,35 @@ export default function ContactPage() {
           </div>
         </section>
         
-        {/* FAQ section */}
-        <section className="py-16">
+        {/* FAQ Section */}
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
+            <div className="text-center max-w-3xl mx-auto mb-12">
               <h2 className="text-3xl font-bold text-white mb-4">Frequently Asked Questions</h2>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-                Find quick answers to common questions about our services and how we work.
-              </p>
+              <p className="text-lg text-blue-200">Find answers to common questions about our services</p>
             </div>
             
-            <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                <h3 className="text-lg font-bold text-white mb-3">How quickly can you implement a solution?</h3>
-                <p className="text-blue-100">
-                  Implementation timeframes vary based on complexity, but most solutions can be deployed within 2-6 weeks after requirements are finalized.
-                </p>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                <h3 className="text-lg font-bold text-white mb-3">Do you offer ongoing support?</h3>
-                <p className="text-blue-100">
-                  Yes, we provide various support packages tailored to your needs, ensuring your automation solutions continue to run smoothly.
-                </p>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                <h3 className="text-lg font-bold text-white mb-3">Can you integrate with our existing systems?</h3>
-                <p className="text-blue-100">
-                  Absolutely! We specialize in integrating automation solutions with your existing tech stack, including CRMs, ERPs, and custom applications.
-                </p>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                <h3 className="text-lg font-bold text-white mb-3">How are your services priced?</h3>
-                <p className="text-blue-100">
-                  We offer transparent, value-based pricing that depends on project scope. Contact us for a customized quote based on your specific requirements.
-                </p>
+            <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-6 md:p-8 border border-white/10">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">How soon can you start working on my project?</h3>
+                  <p className="text-blue-200">We typically begin new projects within 2-3 business days after the initial consultation and agreement. For urgent needs, we can often accommodate rush timelines.</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">What types of businesses do you work with?</h3>
+                  <p className="text-blue-200">We work with businesses of all sizes, from startups to large enterprises, across various industries including healthcare, finance, e-commerce, education, and manufacturing.</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Do you offer ongoing support after implementation?</h3>
+                  <p className="text-blue-200">Yes, we provide comprehensive post-implementation support packages tailored to your needs, including maintenance, updates, troubleshooting, and training.</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">How do you handle data security?</h3>
+                  <p className="text-blue-200">Data security is our top priority. We implement industry-standard encryption, secure authentication methods, and regular security audits to ensure your data remains protected.</p>
+                </div>
               </div>
             </div>
           </div>
