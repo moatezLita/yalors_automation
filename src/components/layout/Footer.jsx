@@ -133,12 +133,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div className="footer-col">
             <Link href="/" className="inline-block mb-6">
-              <div className="flex items-center">
-                <div className="bg-white/10 backdrop-blur-sm p-2 rounded-lg mr-2">
-                  <div className="text-white font-bold text-2xl">Y</div>
-                </div>
-                <div className="text-white text-xl font-bold">YALORS</div>
+              <div className="relative h-9 w-36">
+                <Image
+                  src="/images/yaalors-blanc.png"
+                  alt="Yalors Logo"
+                  fill
+                  className="object-contain  "
+                  priority
+                />
               </div>
+
+              {/* Animated glow effect on hover */}
+              <div className="absolute -inset-1 bg-primary-500/30 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
             </Link>
             <p className="text-blue-200 mb-6">
               Your trusted partner in automation solutions. Transform your business workflows with our cutting-edge technology.

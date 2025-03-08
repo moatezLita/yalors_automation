@@ -84,10 +84,10 @@ export default function Header() {
           <Link href="/" className="header-logo relative flex items-center group">
             <div className="relative h-9 w-36">
               <Image 
-                src="/images/yaalors-noir.png" 
+                src="/images/yaalors-blanc.png" 
                 alt="Yalors Logo" 
                 fill
-                className="object-contain brightness-0 invert"
+                className="object-contain  "
                 priority
               />
             </div>

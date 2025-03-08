@@ -122,14 +122,14 @@ export default function AboutUsPage() {
     {
       name: 'Moatez Litaiem',
       position: 'Founder & CEO',
-      bio: 'With over 10 years of experience in automation and AI',
+      bio: 'Expert in automation and Web Developement',
       image: '/images/team/profile_picture.jpg'
     },
     {
       name: 'Zaineb Boujelbene',
       position: 'CTO',
       bio: 'Expert in machine learning and conversation design',
-      image: '/images/team/zaineb.png'
+      image: '/images/team/zainebbo.png'
     },
     // {
     //   name: 'Anis Khelifi',
@@ -208,7 +208,7 @@ export default function AboutUsPage() {
         </section>
         
         {/* Our story section */}
-        <section className="py-16 md:py-24 bg-white/5">
+        {/* <section className="py-16 md:py-24 bg-white/5">
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row items-center gap-12">
               <div className="lg:w-1/2">
@@ -221,10 +221,10 @@ export default function AboutUsPage() {
                 </p>
                 <p className="text-blue-100 mb-8">
                   Today, Yalors has grown into a leading automation solutions provider serving clients across multiple industries. Our team combines technical expertise with business acumen to deliver solutions that create real value.
-                </p>
+                </p> */}
                 
                 {/* Vision / Mission */}
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   <div className="flex items-start">
                     <div className="bg-blue-500/20 p-1 rounded-full mr-3 mt-1">
                       <Zap className="h-4 w-4 text-blue-400" />
@@ -245,11 +245,11 @@ export default function AboutUsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               
-              <div className="lg:w-1/2">
+              {/* <div className="lg:w-1/2"> */}
                 {/* Timeline */}
-                <div className="timeline-section relative pl-8 border-l border-blue-500/30">
+                {/* <div className="timeline-section relative pl-8 border-l border-blue-500/30">
                   <div className="timeline-item relative mb-12">
                     <div className="absolute -left-10 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                       <span className="text-white font-bold text-sm">1</span>
@@ -293,7 +293,7 @@ export default function AboutUsPage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         
         {/* Stats section */}
         <section className="py-16 stats-section">
@@ -407,35 +407,30 @@ export default function AboutUsPage() {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto justify-center">
-            {teamMembers.map((member, index) => (
-                <motion.div
-                  key={index}
-                  className="team-member bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10"
-                  whileHover={{ y: -5, borderColor: 'rgba(147, 197, 253, 0.3)' }}
-                >
-                  <div className="aspect-square bg-gradient-to-br from-blue-900 to-indigo-900 relative">
-                    {/* We'd use an actual image in production */}
-                    {/* <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-24 h-24 rounded-full bg-blue-700/50 flex items-center justify-center text-white text-3xl font-bold">
-                        {member.name.split(' ').map(n => n[0]).join('')}
-                      </div>
-                    </div> */}
-                        <Image
-                            src={member.image}
-                            alt={member.name}
-                            layout="fill"
-                            objectFit="cover"
-                            priority={index === 0} // Prioritize first image for better LCP
-                        />
-                  </div>
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
-                    <p className="text-blue-300 mb-3">{member.position}</p>
-                    <p className="text-blue-100 text-sm">{member.bio}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+  {teamMembers.map((member, index) => (
+    <motion.div
+      key={index}
+      className="team-member bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10"
+      whileHover={{ y: -5, borderColor: 'rgba(147, 197, 253, 0.3)' }}
+    >
+      <div className="aspect-square bg-gradient-to-br from-blue-900 to-indigo-900 relative">
+        <Image
+          src={member.image}
+          alt={member.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover"
+          priority={index === 0} // Prioritize first image for better LCP
+        />
+      </div>
+      <div className="p-6 text-center">
+        <h3 className="text-xl font-bold text-white mb-1">{member.name}</h3>
+        <p className="text-blue-300 mb-3">{member.position}</p>
+        <p className="text-blue-100 text-sm">{member.bio}</p>
+      </div>
+    </motion.div>
+  ))}
+</div>
             
             <div className="text-center mt-12">
               <Link 
