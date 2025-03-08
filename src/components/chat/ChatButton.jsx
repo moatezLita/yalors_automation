@@ -80,7 +80,7 @@ const ChatButton = () => {
     //     ? 'https://yalors.app.n8n.cloud/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat'
     //     : 'http://localhost:5678/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat';
         
-      const response = await fetch('http://localhost:5678/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat', {
+      const response = await fetch('http://54.38.189.103:5678/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
