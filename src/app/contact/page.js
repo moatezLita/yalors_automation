@@ -245,8 +245,8 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">Visit Us</h3>
                 <p className="text-blue-200">
-                  123 Innovation Street<br />
-                  Tech District, Tunisia
+                  Boumhel Bassatine<br />
+                  Ben arous, Tunisia
                 </p>
               </div>
             </div>

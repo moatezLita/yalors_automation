@@ -232,7 +232,7 @@ export default function Footer() {
             <ul className="space-y-4 mb-6">
               <li className="flex items-start">
                 <MapPin className="text-blue-400 h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-blue-200">Boumhel, Ben Arouss, Tunisia</span>
+                <span className="text-blue-200">Boumhel, Ben Arous, Tunisia</span>
               </li>
               <li className="flex items-center">
                 <Mail className="text-blue-400 h-5 w-5 mr-3 flex-shrink-0" />

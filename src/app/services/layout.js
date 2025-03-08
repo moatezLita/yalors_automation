@@ -2,7 +2,7 @@
 export const metadata = {
     title: 'Our Services',
     description: 'Professional web development services including website design, e-commerce, and mobile applications.',
-    keywords: 'web development, app development, e-commerce, Tunisia',
+    keywords: 'web development, app development, e-commerce, automatisation, ai, Tunisia',
     openGraph: {
       title: 'Services | Yalors',
       description: 'Professional web development services for businesses of all sizes.',

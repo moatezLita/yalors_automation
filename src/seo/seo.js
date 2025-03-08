@@ -2,7 +2,7 @@
 export const defaultMetadata = {
     title: "Yalors - Professional Web Development Services",
     description: "Yalors provides top-quality web development services for businesses looking to establish a strong online presence. Contact us for custom website development.",
-    keywords: "web development, web design, Tunisia, professional websites, custom development",
+    keywords: "web development, web design, Tunisia, professional websites, custom development, automatisation",
     openGraph: {
       type: 'website',
       locale: 'en_US',
