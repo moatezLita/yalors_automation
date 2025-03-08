@@ -75,18 +75,14 @@ const ChatButton = () => {
     setIsLoading(true);
   
     try {
-      // N8n webhook URL - adjust URL as needed for production vs development
-    //   const webhookUrl = process.env.NODE_ENV === 'production' 
-    //     ? 'https://yalors.app.n8n.cloud/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat'
-    //     : 'http://localhost:5678/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat';
-        
-      const response = await fetch('http://54.38.189.103:5678/webhook/a889d2ae-2159-402f-b326-5f61e90f602e/chat', {
+      // Use our Next.js API route instead of directly calling n8n
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          chatInput: input, // Changed from message to chatInput as expected by the AI node
+          chatInput: input,
           sessionId: getOrCreateSessionId()
         }),
       });
