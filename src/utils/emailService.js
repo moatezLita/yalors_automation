@@ -3,12 +3,12 @@ import nodemailer from 'nodemailer';
 
 // Create reusable transporter with OVH email credentials
 const transporter = nodemailer.createTransport({
-  host: 'smtp.mail.ovh.net',
-  port: 465,
-  secure: true,
+  host: process.env.EMAIL_HOST,
+  port: parseInt(process.env.EMAIL_PORT, 10),
+  secure: process.env.EMAIL_SECURE === 'true',
   auth: {
-    user: 'contact@yalors.tn',
-    pass: '8Y3iXTaGsUgVZeY',
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
@@ -95,7 +95,9 @@ export async function sendContactEmail(data) {
     throw error;
   }
 }
-
+if (!process.env.EMAIL_HOST || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+  console.warn('Email configuration is incomplete. Check your environment variables.');
+}
 /**
  * Verifies connection to the email server
  * Useful for testing email setup during development
