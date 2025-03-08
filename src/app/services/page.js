@@ -177,12 +177,12 @@ export default function ServicesPage() {
                           </div>
                           <div className="flex">
                             <div className="bg-blue-500/40 rounded-lg rounded-tr-none p-3 text-sm text-white max-w-xs">
-                              I'd be happy to help! To set up your account, you'll need to follow these steps:
+                              I&apos;d be happy to help! To set up your account, you&apos;ll need to follow these steps:
                             </div>
                           </div>
                           <div className="flex">
                             <div className="bg-blue-500/40 rounded-lg rounded-tr-none p-3 text-sm text-white max-w-xs">
-                              1. Click the "Register" button in the top menu<br />
+                              1. Click the &ldquo;Register&quot; button in the top menu<br />
                               2. Fill out your details<br />
                               3. Verify your email<br />
                               4. Set up your profile preferences
